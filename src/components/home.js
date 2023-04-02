@@ -32,7 +32,7 @@ const Home = () => {
       const data = querySnapshot.docs.map(doc=>doc.data())
       console.log(data)
 
-      if(data[0].invited.includes(currentUser.uid)){
+      if(data[0].invited.includes(uid)){
         console.log("already exists")
       }else{
         console.log("does not exist")
@@ -73,7 +73,7 @@ const Home = () => {
         return <li key={dog.uid}>
           {dog.dogName}<br/>
           {dog.uid}
-          <br/><input type="button" onClick={()=>sendInvite(dog.uid)} value="invite"/>
+          <br/>{<input type="button" onClick={()=>sendInvite(dog.uid)} value="invite"/>}
           <hr/>
          
         </li>

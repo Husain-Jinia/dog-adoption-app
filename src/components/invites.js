@@ -93,7 +93,7 @@ const Invites = (props) => {
         return <div key={d.userUID}>
             <li >
               {d.name}<br/>
-              {<input type="button" disabled value="Accepted"/>}
+              {<input type="button" onClick={()=>acceptInvite(d)}value="Accepted"/>}
               <br/>
             </li>
           </div>
