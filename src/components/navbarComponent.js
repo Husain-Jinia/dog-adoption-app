@@ -14,11 +14,12 @@ const NavbarComponent = () => {
                     
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/invites">Invites</Link></li>
+                    <li><Link to="/chats">Chats</Link></li>
                     {!currentUser?
                     <div>
                     <li><Link to="/register">register</Link></li>
                     <li><Link to="/login">Login</Link></li>
-                   
+                    
                     </div>:
                     <button onClick={()=>signOut(auth)}>Logout</button>
                     }

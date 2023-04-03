@@ -6,6 +6,7 @@ import { useContext } from 'react';
 import { AuthContext } from './context/authContext';
 import NavbarComponent from './components/navbarComponent';
 import Invites from './components/invites';
+import Chats from './components/Chats/chats';
 
 function App() {
   const {currentUser} = useContext(AuthContext)
@@ -27,6 +28,7 @@ function App() {
             <Route path="login" element={<LoginPage/>}/>
             <Route path="register" element={<RegisterPage/>}/>
             <Route path="invites" element={currentUser?<Invites current={currentUser}/>:<LoginPage/>}/>
+            <Route path="chats" element={currentUser?<Chats/>:<LoginPage/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
