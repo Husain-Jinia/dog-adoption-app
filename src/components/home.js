@@ -4,6 +4,7 @@ import {db} from "../firebase"
 import { AuthContext } from '../context/authContext';
 import Invites from './invites';
 import { setDoc } from "firebase/firestore"; 
+import { Card, Badge } from "@windmill/react-ui";
 
 const Home = () => {
   const [dogs, setDogs] = useState([])
@@ -64,34 +65,35 @@ const Home = () => {
   return (
     <div>
       
-      Dogs
-      <hr></hr>
-      current user: {currentUser.uid}
-      <hr></hr>
-      {
+      <div className='flex flex-wrap justify-center m-4'>
+      { 
         dogs.map((dog) =>{
-        return <li key={dog.uid}>
-          {dog.dogName}<br/>
-          {dog.uid}
-          <br/>{<input type="button" onClick={()=>sendInvite(dog.uid)} value="invite"/>}
-          <hr/>
-         
-        </li>
-        })}
-        {/* {
-        invites.map((dog) =>{
-        return <li key={dog.uid}>
-          {dog.invited}<br/>
-          {dog.uid}
-          <br/><input type="button" onClick={()=>sendInvite(dog.uid)} value="invite"/>
-          <hr/>
-         
-        </li>
-        })} */}
+        return <Card className="flex flex-col bg-zinc-100 p-2 mx-2 my-4 max-w-sm rounded-lg shadow-md">
+        <img src={dog.dogPhotoURL} alt=""  className="h-60 w-full object-cover rounded-lg mb-4" />
+        <div className='flex flex-row justify-between bg-neutral-200 rounded'>
+        <h2 className="text-lg font-medium text-gray-800 mb-1 mt-1 ml-2">{dog.dogName}</h2>
+        <h2 className="text-lg font-medium text-gray-800 mb-1 mt-1 mr-2">{dog.dogGender}</h2>
+        </div>
         
-        {/* <hr/>
-        <hr/>
-        <Invites/> */}
+        <div className="flex flex-row justify-between mt-3">
+            <Badge className="antialiased mb-2">
+              {dog.dogAge} y/o
+            </Badge>
+            <Badge className=" antialiased mb-2 rounded-lg bg-green-200 px-2 py-1">
+              {dog.dogNature}
+            </Badge>
+            <Badge className='antialiased'>
+              {dog.dogBreed}
+            </Badge>
+        </div>
+        <div className="flex flex-row justify-between mt-2">
+            <input type="button" value="Invite" className='mx-1 p-1 px-3 rounded-lg font-bold text-slate-500 bg-slate-200' onClick={()=>sendInvite(dog.uid)}/>
+            <input type="button" value="Read more" className='mx-1 p-1 px-3 rounded-lg font-bold text-slate-500 bg-slate-200'/>
+        </div>
+        
+      </Card>
+        })}
+        </div>
     </div>
   )
 }

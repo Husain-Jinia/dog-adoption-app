@@ -35,7 +35,7 @@ const LoginPage = () => {
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
             Dont have an account?
-            <Link to="/login" className="font-medium text-blue-600 hover:text-blue-500">
+            <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
             Register
             </Link>
         </p>
