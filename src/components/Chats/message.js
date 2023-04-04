@@ -28,8 +28,6 @@ const Messages = () => {
             {
                 messages.map(m=>
                     <div key={m.id}>
-                        {
-                            
                         <img
                             style={{ verticalAlign: "middle",
                             width: "25px",
@@ -43,7 +41,6 @@ const Messages = () => {
                             }
                             alt=""
                             />
-                        }
                          {m.text}
                         
                     </div>    
