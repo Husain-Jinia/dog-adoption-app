@@ -75,7 +75,7 @@ const NavbarComponent = () => {
             </button>
           </div>
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex-shrink-0 flex items-center">
+            {/* <div className="flex-shrink-0 flex items-center">
               <img
                 className="block lg:hidden h-8 w-auto"
                 src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
@@ -86,7 +86,7 @@ const NavbarComponent = () => {
                 src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
                 alt="Workflow"
               />
-            </div>
+            </div> */}
             <div className="hidden sm:block sm:ml-6">
                 {
                 !currentUser?
@@ -145,7 +145,8 @@ const NavbarComponent = () => {
         
 
         {/* Profile dropdown */}
-        <div className="ml-3 relative">
+        <div className="ml-3 relative flex">
+          
           <div>
             <button
               className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
@@ -153,13 +154,14 @@ const NavbarComponent = () => {
               aria-haspopup="true"
             >
               <span className="sr-only">Open user menu</span>
-              <img
+              {currentUser&&<img
                 className="h-8 w-8 rounded-full"
-                src="https://avatars.githubusercontent.com/u/35962410?s=400&u=65e9f42b2f383a032a150b3f0523f00d46f198c1&v=4"
+                src={currentUser.photoURL}
                 alt=""
-              />
+              />}
             </button>
           </div>
+          <div className='mx-2 mt-1 font-medium text-normal text-gray-300 '>{currentUser&&currentUser.displayName}</div>
 
           {/* Dropdown menu, show/hide based on menu state. */}
           {/* Entering: "transition ease-out duration-100", From: "transform opacity-0 scale-95", To: "transform opacity-100 scale-100" */}
