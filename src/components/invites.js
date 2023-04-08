@@ -90,38 +90,36 @@ const Invites = (props) => {
   }
 
   return (
-    <div>Invites
-      <div>
+    <div>
+      <div className=' flex flex-col mt-4'>
         {
         userData.filter(user=> {
           return user.accepted===false
         }).map((d) =>{
-        return <div key={d.userUID}>
-            <li >
-              {d.name}<br/>
-              {<input type="button" onClick={()=>acceptInvite(d)} value="Accept"/>}
-              <br/>
-            </li>
+        return <div className='rounded bg-slate-500 border-2 border-slate-500 mx-4 flex py-2 flex-row justify-between mb-4' key={d.userUID}>
+            <div>
+            <div className='text-center text-white text-lg uppercase font-medium'>{d.name}</div>
+              {<input className='rounded bg-slate-300  px-2 py-1' type="button" onClick={()=>acceptInvite(d)} value="Accept"/>}
+
+            </div>
           </div>
         })
       }
       </div>
-      <hr/>
       <div >
       {
       userData.filter(user=> {
         return user.accepted===true
       }).map((d) =>{
-      return <div key={d.userUID} style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-        {d.name}
-        <input type="button" disabled value="Accepted"/>
+      return <div key={d.userUID} className='rounded border-2 border-slate-500  bg-slate-500 mx-4 py-2 px-2 py-1 mx-4 mb-4' style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+        <div className='text-center  text-white uppercase font-medium text-lg'>{d.name}</div>
+        <input className='rounded bg-slate-300  px-2 py-1' type="button" disabled value="Accepted"/>
       </div>
       
       })
     }
       
       </div>
-      <hr/>
     </div>
     
   )
