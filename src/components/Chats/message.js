@@ -47,11 +47,11 @@ const Messages = () => {
                     // </div>    
                     
                    <div class="grid grid-cols-12 gap-y-2"  key={m.id}>
-                    {m.senderId === currentUser.uid?
+                    {m.senderId !== currentUser.uid?
                 <div class="col-start-1 col-end-8 p-3 rounded-lg">
                   <div class="flex flex-row items-center">
                     <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
+                      class="flex items-center justify-center h-10 w-10 rounded-full bg-slate-500 flex-shrink-0"
                     >
                       <img
                         className="rounded-full"
@@ -73,7 +73,7 @@ const Messages = () => {
                 <div class="col-start-6 col-end-13 p-3 rounded-lg">
                   <div class="flex items-center justify-start flex-row-reverse">
                     <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
+                      class="flex items-center justify-center h-10 w-10 rounded-full bg-slate-500 flex-shrink-0"
                     >
                      <img
                         className="rounded-full "

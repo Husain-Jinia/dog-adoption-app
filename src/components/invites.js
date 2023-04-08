@@ -1,9 +1,12 @@
-import React,{useEffect, useState} from 'react'
+import React,{useEffect, useState, useContext} from 'react'
 import { collection, getDoc, getDocs, query, where, doc, setDoc, updateDoc, serverTimestamp, } from "firebase/firestore";
 import {db} from "../firebase"
+import { AuthContext } from '../context/authContext';
 
 const Invites = (props) => {
-  const [currentUser, setCurrentUser] = useState()
+  // const [currentUser, setCurrentUser] = useState()
+  const {currentUser} = useContext(AuthContext)
+
   const [invite, setInvites] = useState([])
   const [userData, setUserData] = useState([])
   const[data, setData] = useState()
@@ -15,6 +18,7 @@ const Invites = (props) => {
   const fetchInvites = async () =>{
     let querySnapshot = []
     let Udata = []
+    console.log("adankfka"+currentUser)
     if(props.current.uid===undefined){
       querySnapshot = await getDocs(query(collection(db, "userInvites"), where("uid", "==", uid)));
       Udata = querySnapshot.docs.map(doc=>doc.data())
@@ -32,11 +36,11 @@ const Invites = (props) => {
     setData(Udata)
   }
     useEffect(() => {
-      fetchInvites()
+      currentUser && fetchInvites()
     }, [])
     
   const acceptInvite = async (user) =>{
-    setCurrentUser(data)
+    // setCurrentUser(data)
     const combinedId = props.current.uid>user.userUID?props.current.uid+user.userUID:user.userUID+props.current.uid
     try {
       if(user.accepted===true){
@@ -44,10 +48,10 @@ const Invites = (props) => {
       }else{
         const res = await getDoc(doc(db, "chats", combinedId))
         console.log(res)
+        console.log(props.current)
         try {
           if(!res.exists()){
-            console.log(data[0].uid)
-            console.log(user.userUID)
+            await 
             await setDoc(doc(db, "chats", combinedId), { messages: [] })
             console.log("chat set")
             await updateDoc(doc(db, "userChats", data[0].uid), {
@@ -58,7 +62,8 @@ const Invites = (props) => {
               },
               [combinedId + ".date"]: serverTimestamp(),
             });
-  
+            console.log("done")
+            
             await updateDoc(doc(db, "userChats", user.userUID), {
               [combinedId + ".userInfo"]: {
                 uid: currentUser.uid,
@@ -67,6 +72,7 @@ const Invites = (props) => {
               },
               [combinedId + ".date"]: serverTimestamp(),
             });
+            console.log("yay")
             const user_index = data[0].invited.findIndex( (obj=>obj.userUID===user.userUID))
             setData(data[0].invited[user_index].accepted = true)
             await setDoc(doc(db,"userInvites", data[0].uid),data[0]) 
@@ -93,7 +99,7 @@ const Invites = (props) => {
         return <div key={d.userUID}>
             <li >
               {d.name}<br/>
-              {<input type="button" onClick={()=>acceptInvite(d)}value="Accepted"/>}
+              {<input type="button" onClick={()=>acceptInvite(d)} value="Accept"/>}
               <br/>
             </li>
           </div>
@@ -108,7 +114,7 @@ const Invites = (props) => {
       }).map((d) =>{
       return <div key={d.userUID} style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
         {d.name}
-        {<input type="button" disabled value="Accepted"/>}
+        <input type="button" disabled value="Accepted"/>
       </div>
       
       })

@@ -25,7 +25,7 @@ function App() {
         <Routes>
           <Route path="/">
             <Route index element={currentUser?<Home/>:<LoginPage/>}/>
-            <Route path="login" element={<LoginPage/>}/>
+            <Route path="login" element={!currentUser?<LoginPage/>:<Home/>}/>
             <Route path="register" element={<RegisterPage/>}/>
             <Route path="invites" element={currentUser?<Invites current={currentUser}/>:<LoginPage/>}/>
             <Route path="chats" element={currentUser?<Chats/>:<LoginPage/>}/>

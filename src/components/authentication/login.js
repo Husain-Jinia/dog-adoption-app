@@ -27,7 +27,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center">
+    <div className="min-h-screen bg-gray-100 flex justify-center items-center bg-gradient-to-r from-slate-500 to-slate-50">
       <div  className='max-w-md w-full px-6 py-12 bg-white shadow-md overflow-hidden sm:rounded-lg'>
       <div className="mb-8">
         <h2 className="text-center text-2xl font-bold text-gray-800">

@@ -15,8 +15,8 @@ const Chats = () => {
 
     useEffect(() => {
         const getChats = ()=>{
-            const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), doc=>{
-                console.log(doc.data())
+            const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc)=>{
+                console.log(currentUser.displayName)
                 setChats(doc.data())
             })
                    
@@ -34,22 +34,6 @@ const Chats = () => {
     
 
     return (
-        // <div>
-        //     Chats
-        //     <div>
-        //         {
-        //             Object.entries(chats)?.map(chat=>{
-        //                 return <div key={chat[0]} onClick={()=>handleSelect(chat[1].userInfo)}>
-        //                     <p>{chat[1].userInfo.displayName}</p>
-        //                     <p>{chat[1].userInfo.lastMessage?.text}</p>
-        //                 </div>
-        //             })
-        //         }
-        //     </div>
-        //     <div>
-        //         <Chat/>
-        //     </div>
-        // </div>
       <div className='h-screen bg-gradient-to-r from-slate-500 to-slate-50 p-10'>
         <div className="flex h-full border border-slate-200 border-4 rounded-lg  flex-col md:flex-row  lg:flex-row xl:flex-row 2xl:flex-row"> 
       <div className="w-1/3 bg-gray-50 h-full border-r border-gray-200">
@@ -61,22 +45,21 @@ const Chats = () => {
         </header>
         <div className='m-4'>
         {
-            Object.entries(chats)?.map(chat=>{
-                return <div key={chat[0]} className='pl-1 py-4 border bg-slate-200 border-2 rounded'  onClick={()=>handleSelect(chat[1].userInfo)}>
+            Object.entries(chats)?.sort((a,b)=>b[1].date - a[1].date).map(chat=>{
+                return <div key={chat[0]} className='pl-1 py-4 border bg-slate-200 border-2 rounded mb-4'  onClick={()=>handleSelect(chat[1].userInfo)}>
                     <div className='flex flex-row'>
-                        {<img className=''
-                            style={{ verticalAlign:"middle",
-                            width: "50px",
-                            height: "50px",
-                            marginInline:"10px",
-                            marginRight:"20px",
-                            borderRadius: "50%"}}
-                            src={
-                                chat[1].userInfo.photoURL
-                            }
-                            alt=""
-                            />
-                            }
+                    <div
+                      class="flex items-center justify-center mr-4 h-10 w-10 rounded-full bg-slate-500 flex-shrink-0"
+                    >
+                      <img
+                        className="rounded-full"
+                        src={
+                            chat[1].userInfo.photoURL
+                        }
+                        alt=""
+                        />
+                    </div>
+                            
                           <div className='flex flex-col w-full'>
                               <p className='text-lg antialiased font-medium text-slate-700'>{chat[1].userInfo.displayName}</p>
                               <p className='text-sm antialiased font-medium text-slate-500'>{chat[1].lastMessage?.text}</p>
