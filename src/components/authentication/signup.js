@@ -24,15 +24,15 @@ const RegisterPage = () => {
     const displayName = event.target[0].value
     const email = event.target[1].value
     const password = event.target[2].value
-    const location = event.target[3].value
-    const dogName = event.target[5].value
-    console.log(dogName)
-    const dogBreed = event.target[6].value
-    console.log(dogBreed)
-    const dogGender = event.target[7].value
-    const dogNature = event.target[8].value
-    const dogAge = event.target[9].value
-    const dogDescription = event.target[10].value
+    const country = event.target[3].value
+    const state = event.target[4].value
+    const city = event.target[5].value
+    const dogName = event.target[7].value
+    const dogBreed = event.target[8].value
+    const dogGender = event.target[9].value
+    const dogNature = event.target[10].value
+    const dogAge = event.target[11].value
+    const dogDescription = event.target[12].value
 
     try {
 
@@ -66,6 +66,9 @@ const RegisterPage = () => {
                 dogNature,
                 dogAge,
                 dogDescription,
+                country,
+                state,
+                city,
                 dogPhotoURL:downloadURL
             })
             console.log(res.user)
@@ -73,7 +76,6 @@ const RegisterPage = () => {
                 uid:res.user.uid,
                 displayName,
                 email,
-                location,
                 photoURL: null
             });
             await setDoc(doc(db,"userInvites", res.user.uid),{
@@ -167,8 +169,16 @@ const RegisterPage = () => {
                     <Input className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" id="password" placeholder="Enter your password"  />
                 </div>
                 <div className="mb-4">
-                    <Label className="block text-gray-700 font-bold mb-2" for="location">Location</Label>
-                    <Input className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="location" id="location" placeholder="Enter your location"  />
+                    <Label className="block text-gray-700 font-bold mb-2" for="Country">Country</Label>
+                    <Input className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="Country" id="country" placeholder="Enter your country"  />
+                </div>
+                <div className="mb-4">
+                    <Label className="block text-gray-700 font-bold mb-2" for="state">State</Label>
+                    <Input className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="state" id="state" placeholder="Enter your state"  />
+                </div>
+                <div className="mb-4">
+                    <Label className="block text-gray-700 font-bold mb-2" for="city">City</Label>
+                    <Input className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="city" id="city" placeholder="Enter your city"  />
                 </div>
                 <button type="button" className="py-1 px-4 bg-blue-500 text-white font-bold rounded hover:bg-blue-600" onClick={nextPage}>Next</button>
             </div>

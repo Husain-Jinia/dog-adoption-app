@@ -9,20 +9,53 @@ import { Card, Badge } from "@windmill/react-ui";
 const Home = () => {
   const [dogs, setDogs] = useState([])
   const [err,setErr] = useState()
-  const [invites,setInvites] = useState([])
+  const [temp, setTemp] = useState([])
+  const [gender, setGender] = useState("all")
+  const [breed, setBreed] = useState("all")
+  const [countries, setCountries] = useState([])
+  const [minAge, setMinAge] = useState(0)
+  const [maxAge, setMaxAge] = useState(1000000)
+  const [city, setCity] = useState("all")
+  const [state, setState] = useState("all")
+  const [country, setCountry] = useState("all")
+
+
+  // const [invites,setInvites] = useState([])
   const checkInvites= []
+  // const [breed, setBreed] = useState()
+  const breeds = ['affenpinscher', 'african', 'airedale', 'akita', 'appenzeller', 'australian', 'basenji', 'beagle', 'bluetick', 'borzoi', 'bouvier', 'boxer', 'brabancon', 'briard', 'buhund', 'bulldog', 'bullterrier', 'cattledog', 'chihuahua', 'chow', 'clumber', 'cockapoo', 'collie', 'coonhound', 'corgi', 'cotondetulear', 'dachshund', 
+  'dalmatian', 'dane', 'deerhound', 'dhole', 'dingo', 'doberman', 
+  'elkhound', 'entlebucher', 'eskimo', 'finnish', 'frise', 'german shepherd', 'greyhound', 'groenendael', 'havanese', 'hound', 'husky', 'keeshond', 'kelpie', 'komondor', 'kuvasz', 'labradoodle', 
+  'labrador', 'leonberg', 'lhasa', 'malamute', 'malinois', 'maltese', 'mastiff', 'mexicanhairless', 'mix', 'mountain', 'newfoundland', 'otterhound', 'ovcharka', 'papillon', 'pekinese', 'pembroke', 'pinscher', 'pitbull', 'pointer', 'pomeranian', 'poodle', 'pug', 'puggle', 'pyrenees', 'redbone', 'retriever', 'ridgeback', 'rottweiler', 'saluki', 'samoyed', 'schipperke', 'schnauzer', 'segugio', 'setter', 'sharpei', 'sheepdog', 'shiba', 'shihtzu', 'spaniel', 'spitz', 'springer', 'stbernard', 'terrier', 'tervuren', 'vizsla', 'waterdog', 'weimaraner', 'whippet', 'wolfhound']
   const {currentUser} = useContext(AuthContext)
 
   const fetchPost = async () => {
     console.log("okay")
     const querySnapshot = await getDocs(collection(db, "Dogs"));
     setDogs(querySnapshot.docs.map(doc=>doc.data()))
+    setTemp(querySnapshot.docs.map(doc=>doc.data()))
     console.log(querySnapshot.docs.map(doc=>doc.data()))
     console.log(dogs)
+    var headers = new Headers();
+    headers.append("X-CSCAPI-KEY", "aXhJeTVwOFFVM0VoRXhob0NjbWFNUWhUMU5ZQzc0Q2NXVGFEV2s0Zw==");
+
+    var requestOptions = {
+      method: 'GET',
+      headers: headers,
+      redirect: 'follow'
+    };
+    fetch("https://api.countrystatecity.in/v1/countries/IN/states", requestOptions)
+    .then(response => response.json())
+    .then(result =>setCountries(result))
+    .catch(error => console.log('error', error));
+    
+    console.log(countries)
   }
+    
 
   useEffect(() => {
     fetchPost()
+    
   }, [])
 
   const sendInvite = async(uid) =>{
@@ -59,13 +92,169 @@ const Home = () => {
     console.log("invite sent")
   }
   
+  const changeBreed = (e) =>{
+    if(e.target.value==="all" && gender==="all"){
+      setTemp(dogs)
+      setBreed("all")
+      console.log(temp)
+    }else if(temp===[]){
+
+    }else if(e.target.value!=="all"){
+      
+      let filteredDogs=[]
+      if(gender!=="all" || country!=="all"){
+        if(country!=="all"){
+          filteredDogs  = dogs.filter(dog=>{
+            return dog.state === country
+          })
+        }
+        if(gender!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.dogGender === gender
+          })
+        }
+        
+        
+      }else{
+        filteredDogs = dogs
+      }
+      
+      filteredDogs = filteredDogs.filter(dog=>{
+        return dog.dogBreed === e.target.value
+      })
+      console.log(filteredDogs)
+      setBreed(e.target.value)
+      setTemp(filteredDogs)
+    }else if(e.target.value==="all"){
+      let filteredDogs  = dogs.filter(dog=>{
+        return dog.dogGender === gender
+      })
+      setTemp(filteredDogs)
+      setBreed("all")
+    }
+  }
+
+  const changeGender = (e) =>{
+    if(e.target.value==="all" && breed==="all" && country==="all"){
+      setTemp(dogs)
+      setGender("all")
+    }else if(e.target.value!=="all"){
+      
+      let filteredDogs=[]
+      if(breed!=="all" || country!=="all"){
+        if(country!=="all"){
+          filteredDogs  = dogs.filter(dog=>{
+            return dog.state === country
+          })
+        }
+        if(breed!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.dogBreed === breed
+          })
+        }
+        
+        
+      }else{
+        filteredDogs = dogs
+      }
+      filteredDogs = filteredDogs.filter(dog=>{
+        return dog.dogGender === e.target.value
+      })
+      console.log(filteredDogs)
+      setGender(e.target.value)
+      setTemp(filteredDogs)
+    }else if(e.target.value==="all"){
+      let filteredDogs  = dogs.filter(dog=>{
+        return dog.dogBreed === breed
+      })
+      setTemp(filteredDogs)
+      setGender("all")
+    }
+  }
+
+  const changeCountry = (e) =>{
+    if(e.target.value==="all" && breed==="all" && gender==="all"){
+      setTemp(dogs)
+      setCountry("all")
+    }else if(e.target.value!=="all"){
+      
+      let filteredDogs=[]
+      if(breed!=="all" || gender!=="all"){
+        if(gender!=="all"){
+          filteredDogs  = dogs.filter(dog=>{
+            return dog.dogGender === gender
+          })
+        }
+        if(breed!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.dogBreed === breed
+          })
+        }
+        
+        
+      }else{
+        filteredDogs = dogs
+      }
+      filteredDogs = filteredDogs.filter(dog=>{
+        return dog.state === e.target.value
+      })
+      console.log(filteredDogs)
+      setCountry(e.target.value)
+      setTemp(filteredDogs)
+    }else if(e.target.value==="all"){
+      let filteredDogs  = dogs.filter(dog=>{
+        return dog.dogBreed === breed
+      })
+      setTemp(filteredDogs)
+      setCountry("all")
+    }
+  }
 
   return (
-    <div className="bg-gradient-to-r from-slate-500 to-slate-50">
+    <div className='min-h-screen bg-gradient-to-r from-slate-500 to-slate-50'>
+      <div className="flex flex-col  ">
+      <div className='my-3 flex flex-row justify-center'>
+      <div className=''>
+      <label for="breeds_multiple" className="block mb-2 text-lg font-medium text-gray-900 dark:text-slate">Filter for breed</label>
+        <select className='-gray-50  border border-gray-300 text-gray-900 text-medium rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' defaultValue="all" onChange={changeBreed}>
+          <option name="all">all</option>
+          {
+            breeds.map( (x,y) => 
+            <option className='p-1 bg-slate-600' key={y}>{x}</option> )
+          }
+        </select>
+      </div>
+      <div className='ml-4'>
+      <label for="breeds_multiple" className="block mb-2 text-lg font-medium text-gray-900 dark:text-slate">Filter for Country</label>
+        <select className='-gray-50 w-30  border border-gray-300 text-gray-900 text-medium rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' defaultValue="all" onChange={changeCountry}>
+          <option name="all">all</option>
+          {
+            countries.map( (x) => 
+            <option className='p-1 bg-slate-600' >{x.name}</option> )
+          }
+        </select>
+      </div>
+      <div className='mx-4'>
+      <label for="breeds_multiple" className="block mb-2 text-lg font-medium text-gray-900 dark:text-slate">Filter for Gender</label>
+        <select className='-gray-50 w-full  border border-gray-300 text-gray-900 text-medium rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' defaultValue="all" onChange={changeGender}>
+          <option className='p-1 bg-slate-600' name="all">all</option> 
+          <option className='p-1 bg-slate-600' name='male' >male</option>
+          <option className='p-1 bg-slate-600' name='female' >female</option>
+        </select>
+      </div>
       
+      {/* <div className=''>
+        <label for="age_multiple" className="block mb-2 text-start mx-3 text-lg font-medium text-gray-900 dark:text-slate">Filter for age (months)</label>
+        <div className='mx-3 flex flex-row '> 
+          <input placeholder='Min age' type="number" className='-gray-50 w-20  border border-gray-300 text-gray-900 text-medium rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'/>
+          <p className='my-2 text-center mx-2 font-bold text-lg'> - </p>
+          <input placeholder='Max age' type='number' className='-gray-50 w-20 border border-gray-300 text-gray-900 text-medium rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'/>
+        </div > 
+      </div> */}
+      </div>
       <div className='flex flex-wrap justify-center pt-4'>
-      { 
-        dogs.map((dog) =>{
+      { temp!==[]?
+        temp.map((dog) =>{
         return <Card key={dog.uid} className="flex flex-col border border-sky-950 text-capitalize bg-slate-100 p-2 mx-2 my-4 max-w-sm rounded-lg shadow-md">
         <div className=''>
           <img src={dog.dogPhotoURL} alt=""  className="h-60 w-full object-cover rounded-lg mb-4" />
@@ -73,7 +262,8 @@ const Home = () => {
         
         <div className='flex flex-row justify-between bg-slate-200 rounded'>
         <h2 className="uppercase text-lg font-medium text-gray-800 mb-1 mt-1 ml-2 ">{dog.dogName}</h2>
-        <h2 className="text-lg font-medium text-gray-800 mb-1 mt-1 mr-2">{dog.dogGender}</h2>
+        {dog.dogGender==="female"?<h2 className="text-lg font-medium text-gray-800 mb-1 mt-1 mr-2">👩</h2>:<h2 className="text-lg font-medium text-gray-800 mb-1 mt-1 mr-2">👨</h2>}
+        <h2 className="text-sm mt-2 font-medium text-gray-800 mb-1 mt-1 mr-2">{dog.country}, {dog.state}, {dog.city}</h2>
         </div>
         
         <div className="flex flex-row justify-between mt-3 ">
@@ -95,9 +285,13 @@ const Home = () => {
         </div>
         
       </Card>
-        })}
+        }):<div className=''>
+            Nothing to display
+          </div>}
         </div>
     </div>
+    </div>
+    
   )
 }
 
