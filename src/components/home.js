@@ -107,7 +107,7 @@ const Home = () => {
   }
   
   const changeBreed = (e) =>{
-    if(e.target.value==="all" && gender==="all"){
+    if(e.target.value==="all" && gender==="all" && state==="all"){
       setTemp(dogs)
       setBreed("all")
       console.log(temp)
@@ -117,8 +117,9 @@ const Home = () => {
       
       let filteredDogs=[]
       if(gender!=="all" || state!=="all"){
+        filteredDogs=dogs
         if(state!=="all"){
-          filteredDogs  = dogs.filter(dog=>{
+          filteredDogs  = filteredDogs.filter(dog=>{
             return dog.state === state
           })
         }
@@ -127,7 +128,7 @@ const Home = () => {
             return dog.dogGender === gender
           })
         }
-        if(city!=="all"){
+        if(state!=="all" &&city!=="all"){
           filteredDogs  = filteredDogs.filter(dog=>{
             return dog.city=== city
           })
@@ -145,9 +146,29 @@ const Home = () => {
       setBreed(e.target.value)
       setTemp(filteredDogs)
     }else if(e.target.value==="all"){
-      let filteredDogs  = dogs.filter(dog=>{
-        return dog.dogGender === gender
-      })
+      let filteredDogs=[]
+      if(gender!=="all" || state!=="all"){
+        filteredDogs=dogs
+        if(state!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.state === state
+          })
+        }
+        if(gender!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.dogGender === gender
+          })
+        }
+        if(state!=="all" &&city!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.city=== city
+          })
+        }
+        
+        
+      }else{
+        filteredDogs = dogs
+      }
       setTemp(filteredDogs)
       setBreed("all")
     }
@@ -161,8 +182,9 @@ const Home = () => {
       
       let filteredDogs=[]
       if(breed!=="all" || state!=="all"){
+        filteredDogs=dogs
         if(state!=="all"){
-          filteredDogs  = dogs.filter(dog=>{
+          filteredDogs  = filteredDogs.filter(dog=>{
             return dog.state === state
           })
         }
@@ -171,7 +193,7 @@ const Home = () => {
             return dog.dogBreed === breed
           })
         }
-        if(city!=="all"){
+        if(state!=="all" && city!=="all"){
           filteredDogs  = filteredDogs.filter(dog=>{
             return dog.city=== city
           })
@@ -187,9 +209,26 @@ const Home = () => {
       setGender(e.target.value)
       setTemp(filteredDogs)
     }else if(e.target.value==="all"){
-      let filteredDogs  = dogs.filter(dog=>{
-        return dog.dogBreed === breed
-      })
+      let filteredDogs=[]
+      if(breed!=="all" || state!=="all"){
+        filteredDogs=dogs
+        if(state!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.state === state
+          })
+        }
+        if(breed!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.dogBreed === breed
+          })
+        }
+        if(state!=="all" && city!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.city=== city
+          })
+        }
+        
+      }
       setTemp(filteredDogs)
       setGender("all")
     }
@@ -226,8 +265,9 @@ const Home = () => {
         .catch(error => console.log('error', error));
 
       if(breed!=="all" || gender!=="all"){
+        filteredDogs=dogs
         if(gender!=="all"){
-          filteredDogs  = dogs.filter(dog=>{
+          filteredDogs  = filteredDogs.filter(dog=>{
             return dog.dogGender === gender
           })
         }
@@ -251,11 +291,24 @@ const Home = () => {
       setToggle(false)  
       setCities([])
       setCity("all")
-      let filteredDogs  = dogs.filter(dog=>{
-        return dog.state === state
-      })
+      let filteredDogs=[]
+      if(breed!=="all" || gender!=="all"){
+        filteredDogs=dogs
+        if(gender!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.dogGender === gender
+          })
+        }
+        if(breed!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.dogBreed === breed
+          })
+        }  
+        
+      }
       setTemp(filteredDogs)
       setState("all")
+      setCity("all")
      
     }
     
@@ -270,8 +323,14 @@ const Home = () => {
       
       let filteredDogs=[]
       if(breed!=="all" || gender!=="all"){
+        filteredDogs=dogs
+        if(state!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.state === state
+          })
+        }  
         if(gender!=="all"){
-          filteredDogs  = dogs.filter(dog=>{
+          filteredDogs  = filteredDogs.filter(dog=>{
             return dog.dogGender === gender
           })
         }
@@ -280,11 +339,7 @@ const Home = () => {
             return dog.dogBreed === breed
           })
         }  
-        if(state!=="all"){
-          filteredDogs  = filteredDogs.filter(dog=>{
-            return dog.state === state
-          })
-        }  
+        
       }else{
         filteredDogs = dogs
       }
@@ -292,14 +347,31 @@ const Home = () => {
         return dog.city === e.target.value
       })
       console.log(filteredDogs)
-      setState(e.target.value)
+      setCity(e.target.value)
       setTemp(filteredDogs)
     }else if(e.target.value==="all"){
-      let filteredDogs  = dogs.filter(dog=>{
-        return dog.city === city
-      })
+      let filteredDogs=[]
+      if(breed!=="all" || gender!=="all" || state!=="all"){
+        filteredDogs=dogs
+        if(state!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.state === state
+          })
+        }  
+        if(gender!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.dogGender === gender
+          })
+        }
+        if(breed!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.dogBreed === breed
+          })
+        }  
+        
+      }
       setTemp(filteredDogs)
-      setState("all")
+      setCity("all")
     }
   }
 
