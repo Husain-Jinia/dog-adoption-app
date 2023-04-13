@@ -13,6 +13,8 @@ const Home = () => {
   const [gender, setGender] = useState("all")
   const [breed, setBreed] = useState("all")
   const [countries, setCountries] = useState([])
+  const [toggle, setToggle] = useState(false)
+  const [cities, setCities] = useState([])
   const [minAge, setMinAge] = useState(0)
   const [maxAge, setMaxAge] = useState(1000000)
   const [city, setCity] = useState("all")
@@ -102,15 +104,20 @@ const Home = () => {
     }else if(e.target.value!=="all"){
       
       let filteredDogs=[]
-      if(gender!=="all" || country!=="all"){
-        if(country!=="all"){
+      if(gender!=="all" || state!=="all"){
+        if(state!=="all"){
           filteredDogs  = dogs.filter(dog=>{
-            return dog.state === country
+            return dog.state === state
           })
         }
         if(gender!=="all"){
           filteredDogs  = filteredDogs.filter(dog=>{
             return dog.dogGender === gender
+          })
+        }
+        if(city!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.city=== city
           })
         }
         
@@ -135,16 +142,16 @@ const Home = () => {
   }
 
   const changeGender = (e) =>{
-    if(e.target.value==="all" && breed==="all" && country==="all"){
+    if(e.target.value==="all" && breed==="all" && state==="all"){
       setTemp(dogs)
       setGender("all")
     }else if(e.target.value!=="all"){
       
       let filteredDogs=[]
-      if(breed!=="all" || country!=="all"){
-        if(country!=="all"){
+      if(breed!=="all" || state!=="all"){
+        if(state!=="all"){
           filteredDogs  = dogs.filter(dog=>{
-            return dog.state === country
+            return dog.state === state
           })
         }
         if(breed!=="all"){
@@ -152,7 +159,11 @@ const Home = () => {
             return dog.dogBreed === breed
           })
         }
-        
+        if(city!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.city=== city
+          })
+        }
         
       }else{
         filteredDogs = dogs
@@ -172,10 +183,77 @@ const Home = () => {
     }
   }
 
-  const changeCountry = (e) =>{
+  const changeState = async (e) =>{
     if(e.target.value==="all" && breed==="all" && gender==="all"){
       setTemp(dogs)
-      setCountry("all")
+      setState("all")
+      setToggle(false)  
+      setCities([])
+      setCity("all")
+    }else if(e.target.value!=="all"){
+      
+      let filteredDogs=[]
+      let c = countries.filter(co=>{
+          return co.name === e.target.value
+        })
+        c= c[0].iso2
+        console.log(c[0].iso2)
+        var headers = new Headers();
+        headers.append("X-CSCAPI-KEY", "aXhJeTVwOFFVM0VoRXhob0NjbWFNUWhUMU5ZQzc0Q2NXVGFEV2s0Zw==");
+
+        var requestOptions = {
+          method: 'GET',
+          headers: headers,
+          redirect: 'follow'
+        };
+        fetch(`https://api.countrystatecity.in/v1/countries/IN/states/${c}/cities`, requestOptions)
+        .then(response => response.json())
+        .then(result =>{setCities(result)
+        setToggle(true)
+        })
+        .catch(error => console.log('error', error));
+
+      if(breed!=="all" || gender!=="all"){
+        if(gender!=="all"){
+          filteredDogs  = dogs.filter(dog=>{
+            return dog.dogGender === gender
+          })
+        }
+        if(breed!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.dogBreed === breed
+          })
+        }  
+        
+      }else{
+        filteredDogs = dogs
+         
+      }
+      filteredDogs = filteredDogs.filter(dog=>{
+        return dog.state === e.target.value
+      })
+      console.log(filteredDogs)
+      setState(e.target.value)
+      setTemp(filteredDogs)
+    }else if(e.target.value==="all"){
+      setToggle(false)  
+      setCities([])
+      setCity("all")
+      let filteredDogs  = dogs.filter(dog=>{
+        return dog.state === state
+      })
+      setTemp(filteredDogs)
+      setState("all")
+     
+    }
+    
+  }
+    
+
+  const changeCity = (e) =>{
+    if(e.target.value==="all" && breed==="all" && gender==="all"){
+      setTemp(dogs)
+      setCity("all")
     }else if(e.target.value!=="all"){
       
       let filteredDogs=[]
@@ -189,24 +267,27 @@ const Home = () => {
           filteredDogs  = filteredDogs.filter(dog=>{
             return dog.dogBreed === breed
           })
-        }
-        
-        
+        }  
+        if(state!=="all"){
+          filteredDogs  = filteredDogs.filter(dog=>{
+            return dog.state === state
+          })
+        }  
       }else{
         filteredDogs = dogs
       }
       filteredDogs = filteredDogs.filter(dog=>{
-        return dog.state === e.target.value
+        return dog.city === e.target.value
       })
       console.log(filteredDogs)
-      setCountry(e.target.value)
+      setState(e.target.value)
       setTemp(filteredDogs)
     }else if(e.target.value==="all"){
       let filteredDogs  = dogs.filter(dog=>{
-        return dog.dogBreed === breed
+        return dog.city === city
       })
       setTemp(filteredDogs)
-      setCountry("all")
+      setState("all")
     }
   }
 
@@ -225,12 +306,22 @@ const Home = () => {
         </select>
       </div>
       <div className='ml-4'>
-      <label for="breeds_multiple" className="block mb-2 text-lg font-medium text-gray-900 dark:text-slate">Filter for Country</label>
-        <select className='-gray-50 w-30  border border-gray-300 text-gray-900 text-medium rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' defaultValue="all" onChange={changeCountry}>
+      <label for="breeds_multiple" className="block mb-2 text-lg font-medium text-gray-900 dark:text-slate">Filter for State</label>
+        <select className='-gray-50 w-30  border border-gray-300 text-gray-900 text-medium rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' defaultValue="all" onChange={changeState}>
           <option name="all">all</option>
-          {
+          { 
             countries.map( (x) => 
             <option className='p-1 bg-slate-600' >{x.name}</option> )
+          }
+        </select>
+      </div>
+      <div className='ml-4'>
+      <label for="breeds_multiple" className="block mb-2 text-lg font-medium text-gray-900 dark:text-slate">Filter for City</label>
+        <select className='-gray-50 w-full  border min-w-20 border-gray-300 text-gray-900 text-medium rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' defaultValue="all" onChange={changeCity}>
+          <option name="all">all</option>
+          { toggle===true?
+            cities.map( (x) => 
+            <option className='p-1 bg-slate-600' >{x.name}</option> ):<option></option>
           }
         </select>
       </div>
