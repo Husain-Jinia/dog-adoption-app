@@ -74,22 +74,8 @@ const Input = () => {
     }
 
     return (
-        // <div>
-        //     <input type="text" onChange={(e) => setText(e.target.value)}
-        //         value={text} placeholder="type your message here" />
-        //      <input
-        //   type="file"
-        //   style={{ display: "none" }}
-        //   id="file"
-        //   onChange={(e) => setImg(e.target.files[0])}
-        // />
-        //     <input type="button"  value="Submit" onClick={handleSend}/>
-        // </div>
-        <div className='flex flex-row items-center h-16 rounded-xl bg-white w-full px-4'
-        
-      >
+        <div className='flex flex-row items-center h-16 rounded-xl bg-white w-full px-4'>
         <div>
-          
             <svg
               class="w-5 h-5"
               fill="none"

@@ -8,6 +8,7 @@ import { Card, Badge } from "@windmill/react-ui";
 import Pagination from "./paginate";
 
 const Home = () => {
+  
   const [currentPage, setCurrentPage] = useState(0);
 
   const handlePageChange = (selectedPage) => {
@@ -28,19 +29,24 @@ const Home = () => {
   const [city, setCity] = useState("all")
   const [state, setState] = useState("all")
   const [country, setCountry] = useState("all")
+
   const PER_PAGE = 8;
   const pageCount = Math.ceil(temp.length / PER_PAGE);
   const offset = currentPage * PER_PAGE;
   const currentPageData = temp.slice(offset, offset + PER_PAGE);
 
+  const breeds = ['affenpinscher', 'african', 'airedale', 'akita', 'appenzeller', 'australian', 
+  'basenji', 'beagle', 'bluetick', 'borzoi', 'bouvier', 'boxer', 'brabancon', 'briard', 'buhund', 'bulldog', 
+  'bullterrier', 'cattledog', 'chihuahua', 'chow', 'clumber', 'cockapoo', 'collie', 'coonhound', 'corgi', 
+  'cotondetulear', 'dachshund', 'dalmatian', 'dane', 'deerhound', 'dhole', 'dingo', 'doberman', 
+  'elkhound', 'entlebucher', 'eskimo', 'finnish', 'frise', 'german shepherd', 'greyhound', 
+  'groenendael', 'havanese', 'hound', 'husky', 'keeshond', 'kelpie', 'komondor', 'kuvasz', 'labradoodle', 
+  'labrador', 'leonberg', 'lhasa', 'malamute', 'malinois', 'maltese', 'mastiff', 'mexicanhairless', 'mix', 
+  'mountain', 'newfoundland', 'otterhound', 'ovcharka', 'papillon', 'pekinese', 'pembroke', 'pinscher', 'pitbull', 
+  'pointer', 'pomeranian', 'poodle', 'pug', 'puggle', 'pyrenees', 'redbone', 'retriever', 'ridgeback', 'rottweiler', 
+  'saluki', 'samoyed', 'schipperke', 'schnauzer', 'segugio', 'setter', 'sharpei', 'sheepdog', 'shiba', 'shihtzu', 
+  'spaniel', 'spitz', 'springer', 'stbernard', 'terrier', 'tervuren', 'vizsla', 'waterdog', 'weimaraner', 'whippet', 'wolfhound']
 
-  // const [invites,setInvites] = useState([])
-  const checkInvites= []
-  // const [breed, setBreed] = useState()
-  const breeds = ['affenpinscher', 'african', 'airedale', 'akita', 'appenzeller', 'australian', 'basenji', 'beagle', 'bluetick', 'borzoi', 'bouvier', 'boxer', 'brabancon', 'briard', 'buhund', 'bulldog', 'bullterrier', 'cattledog', 'chihuahua', 'chow', 'clumber', 'cockapoo', 'collie', 'coonhound', 'corgi', 'cotondetulear', 'dachshund', 
-  'dalmatian', 'dane', 'deerhound', 'dhole', 'dingo', 'doberman', 
-  'elkhound', 'entlebucher', 'eskimo', 'finnish', 'frise', 'german shepherd', 'greyhound', 'groenendael', 'havanese', 'hound', 'husky', 'keeshond', 'kelpie', 'komondor', 'kuvasz', 'labradoodle', 
-  'labrador', 'leonberg', 'lhasa', 'malamute', 'malinois', 'maltese', 'mastiff', 'mexicanhairless', 'mix', 'mountain', 'newfoundland', 'otterhound', 'ovcharka', 'papillon', 'pekinese', 'pembroke', 'pinscher', 'pitbull', 'pointer', 'pomeranian', 'poodle', 'pug', 'puggle', 'pyrenees', 'redbone', 'retriever', 'ridgeback', 'rottweiler', 'saluki', 'samoyed', 'schipperke', 'schnauzer', 'segugio', 'setter', 'sharpei', 'sheepdog', 'shiba', 'shihtzu', 'spaniel', 'spitz', 'springer', 'stbernard', 'terrier', 'tervuren', 'vizsla', 'waterdog', 'weimaraner', 'whippet', 'wolfhound']
   const {currentUser} = useContext(AuthContext)
 
   const fetchPost = async () => {
@@ -68,9 +74,8 @@ const Home = () => {
     
 
   useEffect(() => {
-    fetchPost()
-    
-  }, [])
+    fetchPost() 
+  },[])
 
   const sendInvite = async(uid) =>{
     console.log("received user uid :", uid)
@@ -456,7 +461,7 @@ const Home = () => {
             <p className=' antialiased font-medium text-gray-600 tracking-wide '>{dog.dogDescription}</p>
           </div>
           <div className="flex flex-row justify-between mt-2 bottom-0">
-              <button value="Invite" className='w-full mx-1 p-1 px-3 rounded-lg font-bold text-slate-500 bg-slate-200' onClick={()=>sendInvite(dog.uid)}>Invite</button>
+              <button value="Invite" className='w-full mx-1 p-1 px-3 rounded-lg font-bold text-slate-500 bg-slate-200' onClick={()=>sendInvite(dog.uid)}>Send Invite</button>
           </div>
           
         </Card>

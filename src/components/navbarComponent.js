@@ -161,7 +161,7 @@ const NavbarComponent = () => {
               />}
             </button>
           </div>
-          <div className='mx-2 mt-1 font-medium text-normal text-gray-300 '>{currentUser&&currentUser.displayName}</div>
+          <div className='mx-2 mt-1 font-medium text-normal text-gray-300 '><Link to="/profile">{currentUser&&currentUser.displayName}</Link></div>
 
           {/* Dropdown menu, show/hide based on menu state. */}
           {/* Entering: "transition ease-out duration-100", From: "transform opacity-0 scale-95", To: "transform opacity-100 scale-100" */}
