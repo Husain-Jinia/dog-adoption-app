@@ -4,9 +4,7 @@ import {db} from "../firebase"
 import { AuthContext } from '../context/authContext';
 
 const Invites = (props) => {
-  // const [currentUser, setCurrentUser] = useState()
   const {currentUser} = useContext(AuthContext)
-
   const [invite, setInvites] = useState([])
   const [userData, setUserData] = useState([])
   const[data, setData] = useState()
@@ -17,7 +15,6 @@ const Invites = (props) => {
   const fetchInvites = async () =>{
     let querySnapshot = []
     let inviteData = []
-    console.log("adankfka"+currentUser)
     if(props.current.uid===undefined){
       querySnapshot = await getDocs(query(collection(db, "userInvites"), where("uid", "==", uid)));
       inviteData = querySnapshot.docs.map(doc=>doc.data())
