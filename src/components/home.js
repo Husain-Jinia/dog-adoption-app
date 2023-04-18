@@ -81,10 +81,12 @@ const Home = () => {
     console.log("received user uid :", uid)
     try {
       const querySnapshot = await getDocs(query(collection(db, "userInvites"), where("uid", "==", uid)));
-      console.log(querySnapshot.docs)
+      // console.log(querySnapshot.docs)
       const data = querySnapshot.docs.map(doc=>doc.data())
-      console.log(data)
-      if(data[0].invited.includes(currentUser.uid)){
+      console.log(currentUser)
+      console.log(data[0].invited.some(invite=>invite.userUID===uid))
+      console.log("asdad"+data[0].invited[0].name)
+      if(data[0].invited.some(invite=>invite.userUID===uid)){
         console.log("already exists")
       }else{
         console.log("does not exist")
@@ -101,6 +103,7 @@ const Home = () => {
               }
             ])
           })
+          console.log("invite sent")
         } catch (error) {
           setErr(err)
         }
@@ -108,7 +111,6 @@ const Home = () => {
     } catch (error) {
       setErr(err)
     }
-    console.log("invite sent")
   }
   
   const changeBreed = (e) =>{

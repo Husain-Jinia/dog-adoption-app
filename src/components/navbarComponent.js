@@ -233,7 +233,7 @@ const NavbarComponent = () => {
             </Link>
             <div className="flex relative text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" >
               Invites
-              <div
+              {/* <div
                 className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
                 role="menu"
                 aria-orientation="vertical"
@@ -263,7 +263,7 @@ const NavbarComponent = () => {
                 >
                   Sign out
                 </Link>
-              </div>
+              </div> */}
           </div>
 
             <Link
