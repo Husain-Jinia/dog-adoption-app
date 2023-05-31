@@ -24,9 +24,7 @@ const Chat = () => {
               <Messages/>
             </div>
           </div>
-          <div
-            
-          >
+          <div>
            
             <Input/>
           </div>
