@@ -1,6 +1,26 @@
-# Getting Started with Create React App
+# Dog Adoption App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Screenshot 2024-02-15 003338](https://github.com/Husain-Jinia/dog-adoption-app/assets/75819874/87b6822a-82c5-4cc5-ad70-4be149afc6a7)
+
+## Overview
+
+The Dog Adoption App is a web application built using React and Firebase to facilitate the adoption process for dogs. It leverages Firebase services such as Authentication, Firestore, and Storage to provide a seamless end-to-end experience for users.
+
+## Features
+
+- **User Authentication:** Utilizes Firebase Authentication to allow users to create accounts, sign in, and securely manage their profiles.
+
+- **Dog Listings:** Displays a list of available dogs for adoption, each with detailed information, including images, descriptions, and adoption status.
+
+- **:** Uses Firebase Storage to handle image uploads for each dog, ensuring a smooth and reliable experience for users and administrators.
+- 
+- **Communication with Dog Owners:** Enables potential adopters to communicate with current dog owners. This feature allows users to ask questions, get insights into a dog's behavior, and receive firsthand experiences from those who have already adopted it.
+
+## Setup
+
+### Prerequisites
+
+- Node.js and npm installed on your machine.
 
 ## Available Scripts
 
