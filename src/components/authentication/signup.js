@@ -35,13 +35,7 @@ const RegisterPage = () => {
             const uploadTask = uploadBytesResumable(storageRef, selectedFile);
             // console.log(selectedFile)
             console.log(selectedFile)
-
-
-
-            // Register three observers:
-            // 1. 'state_changed' observer, called any time the state changes
-            // 2. Error observer, called on failure
-            // 3. Completion observer, called on successful completion
+            
             uploadTask.on(
                 (error) => {
                     setErr(true)
@@ -105,7 +99,7 @@ const RegisterPage = () => {
 
         <>
             <div className="min-h-screen bg-gray-100 flex justify-center items-center bg-gradient-to-r from-slate-500 to-slate-50">
-                <div className='max-w-md w-full px-6 py-12 bg-white shadow-md overflow-hidden sm:rounded-lg'>
+                <div className='max-w-md w-full px-6 py-12 bg-white shadow-md overflow-hidden sm:rounded-lg my-10'>
                     <div className="mb-8">
                         <h2 className="text-center text-2xl font-bold text-gray-800">
                             Register

@@ -8,7 +8,6 @@ import Chat from './chat';
 const Chats = () => {
 
   const [chats, setChats] = useState([])
-
   const { currentUser } = useContext(AuthContext)
   const { dispatch } = useContext(ChatContext)
 

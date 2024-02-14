@@ -118,7 +118,7 @@ const Home = () => {
       setTemp(dogs)
       setBreed("all")
       console.log(temp)
-    } else if (temp === []) {
+    } else if (temp.isEmpty()) {
 
     } else if (e.target.value !== "all") {
 
@@ -436,7 +436,7 @@ const Home = () => {
         </div> */}
         </div>
         <div className='flex flex-wrap justify-center pt-4'>
-          {temp !== [] ?
+          {temp ?
             currentPageData.map((dog) => {
               return <Card key={dog.uid} className="flex flex-col border border-sky-950 text-capitalize bg-slate-100 p-2 mx-2 my-4 max-w-sm rounded-lg shadow-md">
                 <div className=''>
